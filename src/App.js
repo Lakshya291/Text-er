@@ -34,7 +34,7 @@ function App() {
 		});
 		setTimeout(() => {
 			setAlert(null);
-		}, 1800);
+		}, 1200);
 	};
 	const toggleMode = () => {
 		if (mode === "light") {

@@ -3,47 +3,65 @@ import React, { useState } from "react";
 
 export default function TextForm(props) {
 	const [Text, setText] = useState("");
-
+	const textLength = Text.split(" ").filter((ele) => {
+		return ele.length !== 0;
+	}).length;
 	// This func makes function uppercase on button click
 	const handleUp = () => {
-		let newText = Text.toUpperCase();
-		setText(newText);
-		props.showAlert("Converted to uppercase!", "success");
+		if (textLength > 0) {
+			let newText = Text.toUpperCase();
+			setText(newText);
+			props.showAlert("Converted to uppercase!", "success");
+		} else {
+			props.showAlert("No  text entered!", "warning");
+		}
 	};
 
 	// This func makes function lowercase on button click
 	const handleLow = () => {
-		let newText = Text.toLowerCase();
-		setText(newText);
-		props.showAlert("Converted to lowercase!", "success");
+		if (textLength > 0) {
+			let newText = Text.toLowerCase();
+			setText(newText);
+			props.showAlert("Converted to lowercase!", "success");
+		} else {
+			props.showAlert("No  text entered!", "warning");
+		}
 	};
 
 	//this func capitalizes the first letter of first word of each sentence.
 	const handleSenCl = () => {
-		let newText = Text.toLowerCase();
-		let words = newText.split(". ");
+		if (textLength > 0) {
+			let newText = Text.toLowerCase();
+			let words = newText.split(". ");
 
-		for (let i = 0; i < words.length; i++) {
-			words[i] = words[i][0].toUpperCase() + words[i].substring(1);
+			for (let i = 0; i < words.length; i++) {
+				words[i] = words[i][0].toUpperCase() + words[i].substring(1);
+			}
+			words.join(". ");
+			setText(words.join(". "));
+
+			props.showAlert("Sentence case applied!", "success");
+		} else {
+			props.showAlert("No  text entered!", "warning");
 		}
-		words.join(". ");
-		setText(words.join(". "));
-
-		props.showAlert("Sentence case applied!", "success");
 	};
 
 	//this func capitalizes first letter of each word
 	const handleCapWord = () => {
-		let newText = Text.toLowerCase();
-		let words = newText.split(" ");
+		if (textLength > 0) {
+			let newText = Text.toLowerCase();
+			let words = newText.split(" ");
 
-		for (let i = 0; i < words.length; i++) {
-			words[i] = words[i][0].toUpperCase() + words[i].substring(1);
+			for (let i = 0; i < words.length; i++) {
+				words[i] = words[i][0].toUpperCase() + words[i].substring(1);
+			}
+			words.join(". ");
+			setText(words.join(" "));
+
+			props.showAlert("Each word capitalized!", "success");
+		} else {
+			props.showAlert("No  text entered!", "warning");
 		}
-		words.join(". ");
-		setText(words.join(" "));
-
-		props.showAlert("Each word capitalized", "success");
 	};
 
 	// //this func encodes text
@@ -61,20 +79,32 @@ export default function TextForm(props) {
 
 	//this func removes extra spaces from the text.
 	const handleDelExSpace = () => {
-		setText(Text.trim().replace(/ +(?= )/g, ""));
-		props.showAlert("Extra spaces trimmed!", "success");
+		if (textLength > 0) {
+			setText(Text.trim().replace(/ +(?= )/g, ""));
+			props.showAlert("Extra spaces trimmed!", "success");
+		} else {
+			props.showAlert("No  text entered!", "warning");
+		}
 	};
 
 	// this func handles copy
 	const handleCopy = () => {
-		navigator.clipboard.writeText(Text);
-		props.showAlert("Copied to clipboard!", "success");
+		if (textLength > 0) {
+			navigator.clipboard.writeText(Text);
+			props.showAlert("Copied to clipboard!", "success");
+		} else {
+			props.showAlert("No  text entered!", "warning");
+		}
 	};
 
 	//thi func clear the text area
 	const handleClear = () => {
-		setText("");
-		props.showAlert("Text cleared!", "success");
+		if (textLength > 0) {
+			setText("");
+			props.showAlert("Text cleared!", "success");
+		} else {
+			props.showAlert("No  text entered!", "warning");
+		}
 	};
 
 	// This function handles all the changes occurring in textarea
@@ -107,7 +137,7 @@ export default function TextForm(props) {
 				</div>
 
 				<button
-					className="btn border border-dark mx-2 my-2"
+					className="btn border border-dark mx-1 my-1"
 					style={{
 						backgroundColor: props.mode === "dark" ? "#BB86FC" : "white",
 						color: props.mode === "dark" ? "white" : "black",
@@ -117,7 +147,7 @@ export default function TextForm(props) {
 					Uppercase
 				</button>
 				<button
-					className="btn border border-dark mx-2 my-2"
+					className="btn border border-dark mx-1 my-1"
 					style={{
 						backgroundColor: props.mode === "dark" ? "#BB86FC" : "white",
 						color: props.mode === "dark" ? "white" : "black",
@@ -127,7 +157,7 @@ export default function TextForm(props) {
 					Lowercase
 				</button>
 				<button
-					className="btn border border-dark mx-2 my-2"
+					className="btn border border-dark mx-1 my-1"
 					style={{
 						backgroundColor: props.mode === "dark" ? "#BB86FC" : "white",
 						color: props.mode === "dark" ? "white" : "black",
@@ -137,7 +167,7 @@ export default function TextForm(props) {
 					Sentence Case
 				</button>
 				<button
-					className="btn border border-dark mx-2 my-2"
+					className="btn border border-dark mx-1 my-1"
 					style={{
 						backgroundColor: props.mode === "dark" ? "#BB86FC" : "white",
 						color: props.mode === "dark" ? "white" : "black",
@@ -148,7 +178,7 @@ export default function TextForm(props) {
 				</button>
 
 				{/* <button
-					className="btn border border-dark mx-2 my-2"
+					className="btn border border-dark mx-1 my-1"
 					style={{
 						backgroundColor: props.mode === "dark" ? "#BB86FC" : "white",
 						color: props.mode === "dark" ? "white" : "black",
@@ -158,7 +188,7 @@ export default function TextForm(props) {
 					Encode
 					</button>
 					<button
-					className="btn border border-dark mx-2 my-2"
+					className="btn border border-dark mx-1 my-1"
 					style={{
 						backgroundColor: props.mode === "dark" ? "#BB86FC" : "white",
 						color: props.mode === "dark" ? "white" : "black",
@@ -168,7 +198,7 @@ export default function TextForm(props) {
 					Decode
 				</button> */}
 				<button
-					className="btn border border-dark mx-2 my-2"
+					className="btn border border-dark mx-1 my-1"
 					style={{
 						backgroundColor: props.mode === "dark" ? "#BB86FC" : "white",
 						color: props.mode === "dark" ? "white" : "black",
@@ -179,7 +209,7 @@ export default function TextForm(props) {
 				</button>
 
 				<button
-					className="btn border border-dark mx-2 my-2"
+					className="btn border border-dark mx-1 my-1"
 					style={{
 						backgroundColor: props.mode === "dark" ? "#BB86FC" : "white",
 						color: props.mode === "dark" ? "white" : "black",
@@ -189,7 +219,7 @@ export default function TextForm(props) {
 					Copy Text
 				</button>
 				<button
-					className="btn border border-dark mx-2 my-2"
+					className="btn border border-dark mx-1 my-1"
 					style={{
 						backgroundColor: props.mode === "dark" ? "#BB86FC" : "white",
 						color: props.mode === "dark" ? "white" : "black",
@@ -266,21 +296,37 @@ export default function TextForm(props) {
 					<p>0 words and 0 characters.</p>
 				) : (
 					<p>
-						{Text.trim().split(" ").length} words and{" "}
-						{Text.replace(/\s+/g, "").length} characters.
+						{
+							Text.split(" ").filter((ele) => {
+								return ele.length !== 0;
+							}).length
+						}{" "}
+						words and {Text.replace(/\s+/g, "").length} characters.
 					</p>
 				)}
 				<p>
 					It will take{" "}
 					<b>
 						{(
-							Math.round(0.005 * Text.trim().split(" ").length * 100) / 100
+							Math.round(
+								0.005 *
+									Text.split(" ").filter((ele) => {
+										return ele.length !== 0;
+									}).length *
+									100
+							) / 100
 						).toFixed(1)}{" "}
 						Minutes
 					</b>{" "}
 					or{" "}
 					<b>
-						{Math.round(0.005 * Text.trim().split(" ").length * 60).toFixed(1)}{" "}
+						{Math.round(
+							0.005 *
+								Text.split(" ").filter((ele) => {
+									return ele.length !== 0;
+								}).length *
+								60
+						).toFixed(1)}{" "}
 						Seconds
 					</b>{" "}
 					to read this paragraph.
