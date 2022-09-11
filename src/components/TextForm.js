@@ -2,6 +2,8 @@ import React, { useState } from "react";
 // import { Buffer } from "node:buffer";
 
 export default function TextForm(props) {
+	const [Text, setText] = useState("");
+
 	// This func makes function uppercase on button click
 	const handleUp = () => {
 		let newText = Text.toUpperCase();
@@ -59,7 +61,7 @@ export default function TextForm(props) {
 
 	//this func removes extra spaces from the text.
 	const handleDelExSpace = () => {
-		setText(Text.replace(/ +(?= )/g, ""));
+		setText(Text.trim().replace(/ +(?= )/g, ""));
 		props.showAlert("Extra spaces trimmed!", "success");
 	};
 
@@ -80,7 +82,6 @@ export default function TextForm(props) {
 		setText(e.target.value);
 	};
 
-	const [Text, setText] = useState("");
 	return (
 		<>
 			<div
@@ -261,28 +262,34 @@ export default function TextForm(props) {
 				}}
 			>
 				<h4>Your Text Summary</h4>
-				<p>
-					{Text.split(" ").length} words and {Text.length} characters.
-				</p>
+				{Text.match(/^\s*$/) ? (
+					<p>0 words and 0 characters.</p>
+				) : (
+					<p>
+						{Text.trim().split(" ").length} words and{" "}
+						{Text.replace(/\s+/g, "").length} characters.
+					</p>
+				)}
 				<p>
 					It will take{" "}
 					<b>
-						{(Math.round(0.005 * Text.split(" ").length * 100) / 100).toFixed(
-							1
-						)}{" "}
+						{(
+							Math.round(0.005 * Text.trim().split(" ").length * 100) / 100
+						).toFixed(1)}{" "}
 						Minutes
 					</b>{" "}
 					or{" "}
 					<b>
-						{Math.round(0.005 * Text.split(" ").length * 60).toFixed(1)} Seconds
+						{Math.round(0.005 * Text.trim().split(" ").length * 60).toFixed(1)}{" "}
+						Seconds
 					</b>{" "}
 					to read this paragraph.
 				</p>
 				<h4>Preview Text</h4>
 				<p className="border border-secondary border-2 border-opacity-25 rounded-2 lead p-2">
-					{Text.length > 0
-						? Text
-						: "Enter Something in the text box above to preview it here."}
+					{Text.match(/^\s*$/)
+						? "Enter Something in the text box above to preview it here."
+						: Text}
 				</p>
 			</div>
 		</>

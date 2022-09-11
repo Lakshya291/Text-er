@@ -51,10 +51,12 @@ function App() {
 		<>
 			<Navbar
 				title="Text'er"
+				home="Home"
 				about="About Us"
 				mode={mode}
 				toggleMode={toggleMode}
 			/>
+
 			<Alert alert={alert} />
 			<div className="container my-2">
 				<TextForm
