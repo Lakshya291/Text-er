@@ -20,8 +20,7 @@ Accessible Anywhere: Access Text-er from anywhere with an internet connection, b
 
 How to Use:
 
-Visit the [Text-er Website]([url](https://lakshya291.github.io/Text-er/)) to access the intuitive single-page application.
-[Text'er Website](https://lakshya291.github.io/Text-er/)
+Visit the [Text-er Website](https://lakshya291.github.io/Text-er/) to access the intuitive single-page application.
 
 Input or paste your text into the provided text area.
 
